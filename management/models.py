@@ -24,7 +24,3 @@ class Segment(Base):
 
 class Slot(Base):
     segment = models.ForeignKey(Segment, on_delete=models.CASCADE)
-
-class User(Base):
-    username = models.CharField(max_length=32, db_index=True)
-    password = models.CharField(max_length=32)

@@ -1,0 +1,10 @@
+{% extends 'management/base.html' %}
+
+{% block content %}
+    <ul>
+    {% for building in buildings %}
+        <li><a>{{building}}</a></li>
+    {% endfor %}
+    </ul>
+    <p><a href={% url 'management:new_building' %}>Create New Building</a></p>
+{% endblock content %}
