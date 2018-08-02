@@ -7,14 +7,15 @@
         <title>Parking Reservation</title>
     </head>
     <body>
-        <a href={% url 'management:index' %}>Parking Reservation</a> -
-        <a href={% url 'management:api'}>API</a> -
+        <a href={% url 'index' %}>Parking Reservation</a> -
+        <a href={% url 'api'}>API</a> -
         {% if user.is_authenticated %}
             Hello, {{user.username}}.
-            <a href={% url 'management:logout' %}>Logout</a> -
+            <a href={% url 'users:logout' %}>Logout</a> -
             <a href={% url 'management:buildings' %}>Buildings</a>
         {% else %}
-            <a href={% url 'management:login' %}>Login</a>
+            <a href={% url 'users:login' %}>Login</a> -
+            <a href={% url 'users:register' %}>Register</a>
         {% endif %}
         {% block content %}{% endblock content %}
     </body>

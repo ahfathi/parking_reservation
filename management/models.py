@@ -14,13 +14,20 @@ class Base(models.Model):
 
 class Building(Base):
     #location
-    pass
+    class Meta:
+        verbose_name_plural = 'buildings'
 
 class Floor(Base):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
+    class Meta:
+        verbose_name_plural = 'floors'
 
 class Segment(Base):
     floor = models.ForeignKey(Floor, on_delete=models.CASCADE)
+    class Meta:
+        verbose_name_plural = 'segments'
 
 class Slot(Base):
     segment = models.ForeignKey(Segment, on_delete=models.CASCADE)
+    class Meta:
+        verbose_name_plural = 'slots'

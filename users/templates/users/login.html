@@ -1,4 +1,4 @@
-{% extends 'management/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -6,11 +6,11 @@
     <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-<form method='post', action={% url 'management:login' %}>
+<form method='post', action={% url 'users:login' %}>
     {% csrf_token %}
     {{ form.as_p }}
     <button name='submit'>Log in</button>
-    <input type='hidden' name='next' value={% url 'management:index' %} />
+    <input type='hidden' name='next' value={% url 'index' %} />
 </form>
 
 {% endblock content %}
