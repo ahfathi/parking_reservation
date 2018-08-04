@@ -18,8 +18,8 @@ from django.conf.urls import url, include
 from management.views import index
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls),
     url(r'^$', index, name='index'),
-    url(r'management/', include('management.urls', namespace='management')),
-    url(r'users/', include('users.urls', namespace='users')),
+    url(r'^management/', include('management.urls', namespace='management')),
+    url(r'^users/', include('users.urls', namespace='users')),
 ]
