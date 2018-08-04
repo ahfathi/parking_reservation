@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <strong>Building: </strong>{{building.label}}
+    <ul>
+        {% for floor in building.floor_set.all %}
+            <li>
+                <strong>Floor: </strong>{{floor.label}}
+                <ul>
+                    {% for segment in floor.segment_set.all %}
+                        <li>
+                            <strong>Segment: </strong>{{segment.label}}
+                            <ul>
+                                {% for slot in segment.slot_set.all %}
+                                    <li><strong>Slot: </strong>{{slot.label}}</li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

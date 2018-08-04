@@ -20,12 +20,16 @@ def buildings(request):
     context = {'buildings': buildings}
     return render(request, 'management/buildings.html', context)
 
+def building(request, id):
+    building = Building.objects.get(pk=id)
+    return render(request, 'management/building.html', {'building': building})
+
 @csrf_exempt
 def new_building(request):
     if not request.user.is_staff:
         return HttpResponseRedirect(reverse('users:login'))
     if request.method != 'POST':
-        return HttpResponse('new_building')
+        return render(request, 'management/new_building.html')
     content = request.body.decode()
     try:
         building = json.loads(content)
@@ -40,7 +44,9 @@ def new_building(request):
                 for slot in segment['slots']:
                     sl = Slot(label=slot, segment=se)
                     sl.save()
-        return HttpResponse(status=201) #created
+        response = "HTTP/1.1 201 CREATED\r\n\r\nRedirectionUrl: {}".format(reverse('management:buildings'))
+        return HttpResponse(response) #created
     except Exception as e:
         print(e)
-        return HttpResponse(status=400) #bad request
+        response = "HTTP/1.1 400 BAD REQUEST\r\n\r\n<h1>Bad Request</h1>"
+        return HttpResponse(response) #bad request

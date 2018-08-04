@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <input class="page_url" type="hidden" value={% url 'management:new_building' %}/>
+    <p>Press Enter to add from the same class,<br/>Tab to go to the next input,<br/>Shift+Enter to backtrack.</p>
+    <div id="building">Building: <input type="text"/></div>
+    <button class="submit">Save</button>
+    <p class="error"></p>
+{% endblock content %}
+{% block javascript %}
+    <script src={% static 'js/jquery-3.3.1.js' %}></script>
+    <script src={% static 'js/new_building.js' %}></script>
+{% endblock javascript %}
