@@ -1,12 +1,7 @@
 from django.db import models
-from django.contrib.auth.models import User
-from management.models import Slot
+from reservations.models import LiveReservation
 
 # Create your models here.
 
-class Reservation(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    slot = models.OneToOneField(Slot, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
-    class Meta:
-        verbose_name_plural = 'reservations'
+class UserReservation(LiveReservation):
+    jwt_token = models.TextField();

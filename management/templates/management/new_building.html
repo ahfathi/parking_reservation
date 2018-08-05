@@ -1,15 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <div id="container">
-
-    </div>
+    <p>Press Enter to add from the same class,<br/>Tab to go to the next input,<br/>Shift+Enter to backtrack.</p>
+    <div id="building">Building: <input size="10" type="text"/></div>
+    <button class="submit">Save</button>
+    <p class="error"></p>
 {% endblock content %}
-
 {% block javascript %}
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src={% static 'js/jquery-3.3.1.js' %}></script>
     <script src={% static 'js/new_building.js' %}></script>
-    <p id="key_help">Press Enter to add new instance of the same class,<br/>Tab to pass to the next input,<br/>and Shift+Enter to Backtrack</p>
-    <div id="building"><input type="text"></input></div>
-    <button id="submit">Save</button>
 {% endblock javascript %}

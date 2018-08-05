@@ -6,5 +6,7 @@ app_name = 'management'
 
 urlpatterns = [
     url(r'^buildings/$', views.buildings, name='buildings'),
+    url(r'^buildings/(?P<id>\d+)/$', views.building, name='building'),
     url(r'^buildings/new/$', views.new_building, name='new_building'),
+    url(r'^buildings/delete/(?P<id>\d+)/$', views.delete_building, name='delete_building'),
 ]

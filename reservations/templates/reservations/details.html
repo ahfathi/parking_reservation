@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 25px">
+    <ul>
+        <li><strong>Building: </strong>{{building}}</li>
+        <li><strong>Floor: </strong>{{floor}}</li>
+        <li><strong>Segment: </strong>{{segment}}</li>
+        <li><strong>Slot: </strong>{{slot}}</li>
+        <li><strong>Token: </strong>{{token}}</li>
+    </ul>
+    <a href={% url 'reservations:my_reservations' %}>Back</a>
+</div>
+{% endblock content %}
