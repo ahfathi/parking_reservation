@@ -4,7 +4,7 @@
     <div class="container" style="margin-top: 25px">
         <ul>
             {% for reservation in reservations %}
-                <li><a href={% url 'reservations:details' reservation.id %}>{{reservation.label}}</a></li>
+                <li><a href={% url 'reservations:details' reservation.id %}>{{reservation.slot.segment.floor.building}}</a> - {{reservation.start_time}}</li>
             {% endfor %}
         </ul>
     </div>

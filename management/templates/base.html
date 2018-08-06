@@ -9,7 +9,7 @@
     </head>
     <body>
         <a href={% url 'index' %}>Parking Reservation</a> -
-        <a href={% url 'api'}>API</a> -
+        <a href={% url 'reservations:guard' %}>Guard</a> -
         {% if user.is_authenticated %}
             Hello, {{user.username}}.
             <a href={% url 'users:logout' %}>Logout</a> -

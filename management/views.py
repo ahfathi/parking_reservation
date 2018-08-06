@@ -17,7 +17,6 @@ def staff_reqired(func):
         return func(*args, **kwargs)
     return wrapper
 
-@login_required
 def index(request):
     return render(request, 'index.html')
 

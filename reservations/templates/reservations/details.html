@@ -7,8 +7,10 @@
         <li><strong>Floor: </strong>{{floor}}</li>
         <li><strong>Segment: </strong>{{segment}}</li>
         <li><strong>Slot: </strong>{{slot}}</li>
+        <li><strong>Start: </strong>{{start}}</li>
+        <li><strong>End: </strong>{{end}}</li>
         <li><strong>Token: </strong>{{token}}</li>
     </ul>
-    <a href={% url 'reservations:my_reservations' %}>Back</a>
+    <a href={% url 'reservations:delete' id %}>Delete</a>
 </div>
 {% endblock content %}

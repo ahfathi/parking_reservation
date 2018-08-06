@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container" style="margin-top: 25px">
+        <p>Enter your JWT Token to check your entrance:</p>
+        <textarea style="display: block" rows="4" cols="50"></textarea>
+        <p><button>authorize</button></p>
+        <p class="error"></p>
+    </div>
+{% endblock content %}
+
+{% block javascript %}
+    <script src={% static 'js/jquery-3.3.1.js' %}></script>
+    <script>
+        $(document).ready(function(){
+            $("button").click(function(){
+                var token = $("textarea").val();
+                if (token == "") {
+                    $("p.error").text("please enter your token");
+                }
+                else {
+                    req = {"jwt_token": token};
+                    $.post(window.location.pathname, JSON.stringify(req), function(response){
+                        var content = JSON.parse(response);
+                        $("p.error").text(content["message"]);
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock javascript %}
