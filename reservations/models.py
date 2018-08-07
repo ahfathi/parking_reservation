@@ -10,5 +10,9 @@ class Reservation(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     jwt_token = models.TextField()
+    expired = models.BooleanField(default=False)
     class Meta:
-        verbose_name_plural = 'reservations'
+        indexes = [
+            models.Index(fields=['expired', 'slot']),
+            models.Index(fields=['user']),
+        ]

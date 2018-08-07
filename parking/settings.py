@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'management',
-    'users',
+    'front_view',
     'reservations',
 ]
 
@@ -130,10 +130,10 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-LOGIN_URL = '/users/login'
+LOGIN_URL = '/login/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'front_view/static'),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

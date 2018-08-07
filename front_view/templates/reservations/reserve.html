@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{%load static %}
+
+{% block content %}
+    <div class="container" style="margin-top: 25px">
+        <input type="hidden" id="slot_id" value={{slot.id}} />
+        Start Time: <input type="datetime-local" id="start_time" />
+        End Time: <input type="datetime-local" id="end_time" />
+        <button class="submit">Reserve</button>
+        <p class="error"></p>
+    </div>
+{% endblock content %}
+{% block javascript %}
+<script src={% static 'js/jquery-3.3.1.js' %}></script>
+<script>
+    $(document).ready(function() {
+        $("button.submit").click(function() {
+            var slot_id = $("input#slot_id").val();
+            var start_time = $("input#start_time").val();
+            var end_time = $("input#end_time").val();
+            if (slot_id == "" || start_time == "" || end_time == "") {
+                $("p.error").text("please full up all the entries");
+            }
+            else {
+                var reservation = {
+                    'slot_id': slot_id,
+                    'start_time': start_time,
+                    'end_time': end_time,
+                };
+                $.post(window.location.pathname, JSON.stringify(reservation), function(response) {
+                    var content = JSON.parse(response);
+                    var error = content['error_message'];
+                    if (error != null) {
+                        $("p.error").text(error);
+                    }
+                    else {
+                        alert("this is your security token and you need it to pass through the parking guard. please keep it safely.\n\n" + content["jwt_token"]);
+                        window.location.replace(content['redirect_url']);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock javascript %}
