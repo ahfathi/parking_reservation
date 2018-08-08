@@ -98,7 +98,6 @@ def guard(request):
         start = datetime.strptime(claims['start'], '%Y-%m-%dT%H:%M')
         end = datetime.strptime(claims['end'], '%Y-%m-%dT%H:%M')
         now = datetime.now()
-        print(now, start)
         if now < start:
             response_json = {'message': 'you are too soon, your reservation time is: {}'.format(claims['start'])}
         elif now > end:
