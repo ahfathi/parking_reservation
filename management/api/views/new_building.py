@@ -10,7 +10,7 @@ import json
 @staff_required
 def view(request):
     if request.method != 'POST':
-        return render(request, 'management/new_building.html')
+        return render(request, 'new_building.html')
     content = request.body.decode()
     try:
         building = json.loads(content)
@@ -26,8 +26,8 @@ def view(request):
                     sl = Slot(label=slot, segment=se)
                     sl.save()
         response_json = {'redirect_url': reverse('front_view:buildings')}
-        print(json.dumps(response_json))
         return HttpResponse(json.dumps(response_json), status=201) #201 created
     except Exception as e:
         print(e)
-        return HttpResponse(status=400,content_type="application/json") #400 bad request
+        response_json = {'error_message': e}
+        return HttpResponse(json.dumps(e), status=400) #400 bad request

@@ -15,7 +15,7 @@ import jwt
 def view(request, slot_id):
     if request.method != 'POST':
         slot = Slot.objects.get(pk=slot_id)
-        return render(request, 'reservations/reserve.html', {'slot': slot})
+        return render(request, 'reserve.html', {'slot': slot})
     content = request.body.decode()
     try:
         data = json.loads(content)
@@ -24,10 +24,10 @@ def view(request, slot_id):
         now = datetime.now()
         if now >= start:
             response_json = {'error_message': 'invalid input; start time must be set for later'}
-            return HttpResponse(json.dumps(response_json))
+            return HttpResponse(json.dumps(response_json), status=400)
         if start >= end:
             response_json = {'error_message': 'invalid input; start time must be smaller than end time'}
-            return HttpResponse(json.dumps(response_json))
+            return HttpResponse(json.dumps(response_json), status=400)
         reserved_slot = Slot.objects.get(pk=int(data['slot_id']))
         reservations = Reservation.objects.filter(expired=False, slot=reserved_slot)
         now = datetime.now()

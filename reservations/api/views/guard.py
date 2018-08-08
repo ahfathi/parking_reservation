@@ -12,7 +12,7 @@ import jwt
 @staff_required
 def view(request):
     if request.method != 'POST':
-        return render(request, 'reservations/guard.html')
+        return render(request, 'guard.html')
     content = json.loads(request.body.decode())
     token = content['jwt_token']
     try:

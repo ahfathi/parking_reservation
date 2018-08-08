@@ -1,9 +1,9 @@
 # from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.contrib.auth import logout, login
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from management.models import Building
 from reservations.models import Reservation
@@ -27,18 +27,18 @@ def register(request):
             login(request, user)
             return HttpResponseRedirect(reverse('front_view:index'))
     context = {'form': form}
-    return render(request, 'users/register.html', context)
+    return render(request, 'register.html', context)
 
 @login_required
 def buildings(request):
     buildings = Building.objects.all()
     context = {'buildings': buildings}
-    return render(request, 'management/buildings.html', context)
+    return render(request, 'buildings.html', context)
 
 @staff_required
 def building(request, id):
     building = Building.objects.get(pk=id)
-    return render(request, 'management/building.html', {'building': building})
+    return render(request, 'building.html', {'building': building})
 
 @staff_required
 def delete_building(request, id):
@@ -50,11 +50,11 @@ def delete_building(request, id):
 @login_required
 def my_reservations(request):
     reservations = Reservation.objects.filter(user=request.user).all()
-    return render(request, 'reservations/my_reservations.html', {'reservations': reservations})
+    return render(request, 'my_reservations.html', {'reservations': reservations})
 
 @login_required
 def details(request, id):
-    reservation = Reservation.objects.get(pk=id)
+    reservation = get_object_or_404(Reservation, pk=id)
     context = {
         'id': reservation.id,
         'building': reservation.slot.segment.floor.building.label,
@@ -66,6 +66,6 @@ def details(request, id):
         'token': reservation.jwt_token,
     }
     if reservation.user == request.user:
-        return render(request, 'reservations/details.html', context)
+        return render(request, 'details.html', context)
     else:
-        return HttpResponse(status=404) #not found
+        raise Http404() #not found
