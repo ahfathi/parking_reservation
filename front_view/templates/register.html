@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method='post', action={% url 'front_view:register' %}>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name='submit'>Register</button>
+        <input type='hidden' name='next' value={% url 'front_view:index' %} />
+    </form>
+{% endblock content %}

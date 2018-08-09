@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container" style="margin-top: 25px">
+    <ul>
+        <li><strong>Building: </strong>{{building}}</li>
+        <li><strong>Floor: </strong>{{floor}}</li>
+        <li><strong>Segment: </strong>{{segment}}</li>
+        <li><strong>Slot: </strong>{{slot}}</li>
+        <li><strong>Start: </strong>{{start}}</li>
+        <li><strong>End: </strong>{{end}}</li>
+        <li><strong>Token: </strong><span id="token">{{token}}</span></li>
+    </ul>
+    <button onclick="copy('token')">Copy to ClipBoard</button>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+<script>
+    function copy(elementId) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", document.getElementById(elementId).innerHTML);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+        alert("token copied!");
+    }
+</script>
+{% endblock javascript %}

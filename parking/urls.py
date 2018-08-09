@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url, include
-from management.views import index
 
 urlpatterns = [
+    url(r'^', include('front_view.urls', namespace='front_view')),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', index, name='index'),
-    url(r'^management/', include('management.urls', namespace='management')),
-    url(r'^users/', include('users.urls', namespace='users')),
-    url(r'^reservations/', include('reservations.urls', namespace='reservations')),
+    url(r'^management/', include('management.api.urls', namespace='management')),
+    url(r'^reservations/', include('reservations.api.urls', namespace='reservations')),
 ]

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>Parking Reservation</title>
+        {% block css %}{% endblock css %}
+    </head>
+    <body>
+        <a href={% url 'front_view:index' %}>Parking Reservation</a> -
+        <a href={% url 'reservations:guard' %}>Guard</a> -
+        {% if user.is_authenticated %}
+            Hello, {{user.username}}.
+            <a href={% url 'front_view:logout' %}>Logout</a> -
+            {% if user.is_staff %}
+                <a href={% url 'front_view:buildings' %}>Buildings</a> -
+            {% endif %}
+            <a href={% url 'front_view:my_reservations' %}>My Reservations</a>
+            
+        {% else %}
+            <a href={% url 'front_view:login' %}>Login</a> -
+            <a href={% url 'front_view:register' %}>Register</a>
+        {% endif %}
+        {% block content %}{% endblock content %}
+        {% block javascript %}{% endblock javascript %}
+    </body>
+</html>
