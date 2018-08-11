@@ -11,6 +11,7 @@ class SlotAdmin(admin.ModelAdmin):
     list_display = ('label', 'segment_label', 'floor_label', 'building_label', 'status')
     list_filter = ('segment__floor__building', 'segment__floor', 'segment', 'label')
     actions = ['download_csv', 'download_pdf', 'disable', 'enable']
+    exclude = ('disabled',)
 
     def download_csv(self, request, queryset):
         response = HttpResponse(content_type='text/csv')
@@ -64,29 +65,79 @@ class SegmentAdmin(admin.ModelAdmin):
     list_display = ('label', 'floor_label', 'building_label', 'status')
     list_filter = ('floor__building', 'floor', 'label')
     actions = ['disable', 'enable']
+    exclude = ('disabled',)
 
     def disable(self, request, queryset):
         for segment in queryset:
             segment.disabled = True
             segment.save()
+            for slot in segment.slot_set.all():
+                slot.disabled = True
+                slot.save()
     def enable(self, request, queryset):
         for segment in queryset:
             segment.disabled = False
             segment.save()
+            for slot in segment.slot_set.all():
+                slot.disabled = False
+                slot.save()
 
 @admin.register(Floor)
 class FloorAdmin(admin.ModelAdmin):
     list_display = ('label', 'building_label', 'status')
     list_filter = ('building', 'label')
     actions = ['disable', 'enable']
+    exclude = ('disabled',)
 
     def disable(self, request, queryset):
         for floor in queryset:
             floor.disabled = True
             floor.save()
+            for segment in floor.segment_set.all():
+                segment.disabled = True
+                segment.save()
+                for slot in segment.slot_set.all():
+                    slot.disabled = True
+                    slot.save()
     def enable(self, request, queryset):
         for floor in queryset:
             floor.disabled = False
             floor.save()
+            for segment in floor.segment_set.all():
+                segment.disabled = False
+                segment.save()
+                for slot in segment.slot_set.all():
+                    slot.disabled = False
+                    slot.save()
 
-admin.site.register(Building)
+@admin.register(Building)
+class BuildignAdmin(admin.ModelAdmin):
+    list_display = ['label', 'status']
+    actions = ['disable', 'enable']
+    exclude = ('disabled',)
+    def disable(self, request, queryset):
+        for building in queryset:
+            building.disabled = True
+            building.save()
+            for floor in building.floor_set.all():
+                floor.disabled = True
+                floor.save()
+                for segment in floor.segment_set.all():
+                    segment.disabled = True
+                    segment.save()
+                    for slot in segment.slot_set.all():
+                        slot.disabled = True
+                        slot.save()
+    def enable(self, request, queryset):
+        for building in queryset:
+            building.disabled = False
+            building.save()
+            for floor in building.floor_set.all():
+                floor.disabled = False
+                floor.save()
+                for segment in floor.segment_set.all():
+                    segment.disabled = False
+                    segment.save()
+                    for slot in segment.slot_set.all():
+                        slot.disabled = False
+                        slot.save()
