@@ -4,5 +4,5 @@ env/
 */__pycache__/
 */api/__pycache__/
 */api/views/__pycache__/
-*/migrations/__pycache__/
+*/migrations/
 .DS_Store

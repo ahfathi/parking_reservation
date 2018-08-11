@@ -3,8 +3,12 @@
 {% block content %}
     <ul>
     {% for building in buildings %}
-        <li><a href={% url 'front_view:building' building.id %} >{{building}}</a></li>
+        {% if not building.disabled %}
+            <li><a href={% url 'front_view:building' building.id %} >{{building}}</a></li>
+        {% endif %}
     {% endfor %}
     </ul>
-    <p><a href={% url 'management:new_building' %}>Create New Building</a></p>
+    {% if user.is_staff %}
+        <p><a href={% url 'management:new_building' %}>Create New Building</a></p>
+    {% endif %}
 {% endblock content %}

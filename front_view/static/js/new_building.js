@@ -35,6 +35,7 @@ $(document).ready(function() {
         });
     });
     $("button.submit").click(function() {
+        $(this).attr("disabled", "disabled");
         var buil = $("#building").children().first()
         label = buil.val()
         var error = false;
@@ -68,6 +69,7 @@ $(document).ready(function() {
                 });
             });
         });
+        $(this).removeAttr("disabled");
         if (error == true) {
             $("p.error").text("please full up all the entries");
         }

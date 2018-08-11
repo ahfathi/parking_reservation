@@ -8,10 +8,9 @@ from .pdfgen import DataToPdf
 
 @admin.register(Slot)
 class SlotAdmin(admin.ModelAdmin):
-    list_display = ('label', 'segment', 'floor', 'building')
-    list_display_links = ('label', 'segment', 'floor', 'building')
+    list_display = ('label', 'segment_label', 'floor_label', 'building_label', 'status')
     list_filter = ('segment__floor__building', 'segment__floor', 'segment', 'label')
-    actions = ['download_csv', 'download_pdf']
+    actions = ['download_csv', 'download_pdf', 'disable', 'enable']
 
     def download_csv(self, request, queryset):
         response = HttpResponse(content_type='text/csv')
@@ -50,17 +49,44 @@ class SlotAdmin(admin.ModelAdmin):
         doc.export(response)
         return response
     download_pdf.short_description = 'Download PDF'
- 
+
+    def disable(self, request, queryset):
+        for slot in queryset:
+            slot.disabled = True
+            slot.save()
+    def enable(self, request, queryset):
+        for slot in queryset:
+            slot.disabled = False
+            slot.save()
+
 @admin.register(Segment)
 class SegmentAdmin(admin.ModelAdmin):
-    list_display = ('label', 'floor', 'building')
-    list_display_links = ('label', 'floor', 'building')
+    list_display = ('label', 'floor_label', 'building_label', 'status')
     list_filter = ('floor__building', 'floor', 'label')
+    actions = ['disable', 'enable']
+
+    def disable(self, request, queryset):
+        for segment in queryset:
+            segment.disabled = True
+            segment.save()
+    def enable(self, request, queryset):
+        for segment in queryset:
+            segment.disabled = False
+            segment.save()
 
 @admin.register(Floor)
 class FloorAdmin(admin.ModelAdmin):
-    list_display = ('label', 'building')
-    list_display_links = ('label', 'building')
+    list_display = ('label', 'building_label', 'status')
     list_filter = ('building', 'label')
+    actions = ['disable', 'enable']
+
+    def disable(self, request, queryset):
+        for floor in queryset:
+            floor.disabled = True
+            floor.save()
+    def enable(self, request, queryset):
+        for floor in queryset:
+            floor.disabled = False
+            floor.save()
 
 admin.site.register(Building)
